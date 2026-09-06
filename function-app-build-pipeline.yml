@@ -16,8 +16,8 @@ variables:
   # Agent VM image name
   vmImageName: 'windows-latest'
 
-  # Working Directory
-  workingDirectory: '$(System.DefaultWorkingDirectory)/FUNCTION_APP_NAME'
+  # Repository working directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)'
 
 stages:
 - stage: Build
@@ -38,11 +38,11 @@ stages:
        vstsFeed: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 
     - task: DotNetCoreCLI@2
-      displayName: Build
+      displayName: Publish
       inputs:
-        command: 'build'
+        command: 'publish'
         projects: |
-          $(workingDirectory)/*.csproj
+          $(workingDirectory)/**/*.csproj
         arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
 
     - task: ArchiveFiles@2
